@@ -12,15 +12,12 @@ namespace MASProjekt
         public string Name {  get; private set; }
         public string Surname {  get; private set; }
 
-        public List<Course> CourseList { get; set; }
-
         public string? Description { get; set; } 
 
-        public Creator(string name, string surname, List<Course> courseList, string description)
+        public Creator(string name, string surname, string description)
         {
             Name = name;    
             Surname = surname;
-            CourseList = courseList;
             Description = description;
         }
 

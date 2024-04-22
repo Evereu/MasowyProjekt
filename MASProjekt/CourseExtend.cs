@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Xml.Linq;
 
 namespace MASProjekt
 {
@@ -11,18 +12,19 @@ namespace MASProjekt
             VideoCourses.Add(course);
         }
 
-        public static void RemoveCourse(Course course)
+        public static void RemoveCourse(string name)
         {
-            VideoCourses.Remove(course);
+            VideoCourses.RemoveAll(course => course.Name == name);
+
         }
 
-        public static void showCourses()
+        public static void ShowCourses()
         {
-            Console.WriteLine("Wszystkie dostępne kursy");
+            Console.WriteLine("Wszystkie dostępne kursy: ");
 
             foreach (Course course in VideoCourses)
             {
-                Console.WriteLine(course.Name);
+                Console.WriteLine(course.ToString());   //override tostringa tu jest 
             }
         }
 
@@ -41,13 +43,20 @@ namespace MASProjekt
             VideoCourses.Max(course => course.AvgCourseRate);
         }
 
-        public static string SerializeVideoCourses(List<Course> courses)       
+        public static string SerializeVideoCourses(List<Course> courses)      //przeciążenie 
         {
             string jsonString = JsonSerializer.Serialize(courses);
 
             return jsonString;
         }
-            
+
+        public static string SerializeVideoCourses(Course course) //przeciążenie
+        {
+            string jsonString = JsonSerializer.Serialize(course);
+
+            return jsonString;
+        }
+
         public static List<Course> DeserializeVideoCourses(string json)
         {
             var course = JsonSerializer.Deserialize<List<Course>>(json);

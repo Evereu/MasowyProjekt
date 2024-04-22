@@ -12,8 +12,8 @@
 
         public Creator Creator;       //Atrybut złożony
                 
-        public string? Subtitles { get; set; }     //opcjonalny
-
+        public string? CourseDescription { get; set; }     //opcjonalny
+                
         public List<int> CourseRateList { get; set; } //powtarzalny   
 
         public double AvgCourseRate     // Atrybut pochodny - średnia ocen filmu
@@ -34,20 +34,23 @@
 
         }
 
-        public Course(string name, Creator creator, string subtitles, List<int> courseRateList)
+        public Course(string name, Creator creator, string courseDescription, List<int> courseRateList)
         {
-            Name = name;
+            Name = name;    
             Creator = creator;
-            Subtitles = subtitles;
+            CourseDescription = courseDescription;
             CourseRateList = courseRateList;
         }
 
         public override string ToString()   //Przesłonięcie
         {
-            var result = $"Kurs: {Name}, AvgCourseRate: {AvgCourseRate}, Subtitles: {Subtitles}";
+     
+            string courseRateListString = string.Join(", ", CourseRateList);
+
+            var result = $"Kurs: {Name}, AvgCourseRate: {AvgCourseRate}, Subtitles: {CourseDescription}, CourseRateList: {courseRateListString}";
 
             return result;
         }
 
-    }
+    }   
 }
