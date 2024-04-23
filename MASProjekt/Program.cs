@@ -1,43 +1,51 @@
-﻿namespace MASProjekt
+﻿
+namespace MASProjekt
 {
     public class Program
     {
         static void Main(string[] args)
-        {   
+        {
 
             //Platforma z kursami wideo
 
-            
+            //W przypadku istniejącego juz jsona
 
-            Creator creator1 = new Creator("Jan", "Nowak", "Fajny twórca");
-            Creator creator2 = new Creator("Jan", "Nowak", "Fajny twórca");
-            Creator creator3 = new Creator("Jan", "Nowak", "Fajny twórca");
-            Creator creator4 = new Creator("Jan", "Nowak", "Fajny twórca");
-                
-            List<int> rateList1 = new List<int> { 1,2,3,4};  
-            List<int> rateList2 = new List<int> { 2,5,3,1};  
-            List<int> rateList3 = new List<int> { 1,2,5,4};  
-            List<int> rateList4 = new List<int> { 1,7,3,1};
-                
-            Course ExampleCourse1 = new Course("course1", creator1, "true", rateList1);
-            Course ExampleCourse2 = new Course("course2", creator2, "true", rateList2);
-            Course ExampleCourse3 = new Course("course3", creator3, "true", rateList3);
-            Course ExampleCourse4 = new Course("course4", creator4, "true", rateList4);
-                        
-            CourseExtend.AddCourse(ExampleCourse1); 
-            CourseExtend.AddCourse(ExampleCourse2);
-            CourseExtend.AddCourse(ExampleCourse3);
-            CourseExtend.AddCourse(ExampleCourse4);
+            string contents = File.ReadAllText(@".\courseList.txt");
 
-            List<Course> courseList = new List<Course>
-            {
-                ExampleCourse1,
-                ExampleCourse2,
-                ExampleCourse3,
-                ExampleCourse4
-            };
+            CourseExtend.AddCourse(CourseExtend.DeserializeVideoCourses(contents));
 
-            File.WriteAllText(@".\\courseList.txt", CourseExtend.SerializeVideoCourses(courseList));
+
+            //Na potrzeby ręcznego dodania obiektów 
+
+            //Creator creator1 = new Creator("Jan", "Nowak", "Fajny twórca");
+            //Creator creator2 = new Creator("Jan", "Nowak", "twórca");
+            //Creator creator3 = new Creator("Jan", "Nowak", "Fajny twórca");
+            //Creator creator4 = new Creator("Jan", "Nowak", "Fajny twórca");
+
+            //List<int> rateList1 = new List<int> { 1, 2, 3, 4 };
+            //List<int> rateList2 = new List<int> { 2, 5, 3, 1 };
+            //List<int> rateList3 = new List<int> { 1, 2, 5, 4 };
+            //List<int> rateList4 = new List<int> { 1, 7, 3, 1 };
+
+            //Course ExampleCourse1 = new Course("course1", creator1, "true", rateList1);
+            //Course ExampleCourse2 = new Course("course2", creator2, "true", rateList2);
+            //Course ExampleCourse3 = new Course("course3", creator3, "true", rateList3);
+            //Course ExampleCourse4 = new Course("course4", creator4, "true", rateList4);
+
+            //CourseExtend.AddCourse(ExampleCourse1);
+            //CourseExtend.AddCourse(ExampleCourse2);
+            //CourseExtend.AddCourse(ExampleCourse3);
+            //CourseExtend.AddCourse(ExampleCourse4);
+
+            //List<Course> courseList = new List<Course>
+            //{
+            //    ExampleCourse1,
+            //    ExampleCourse2,
+            //    ExampleCourse3,
+            //    ExampleCourse4
+            //};
+
+            //File.WriteAllText(@".\courseList.txt", CourseExtend.SerializeVideoCourses(courseList));
 
 
 
@@ -47,6 +55,7 @@
                 Console.WriteLine("2 - Dodaj nowy kurs");
                 Console.WriteLine("3 - Pokaz najwyzej oceniany kurs");
                 Console.WriteLine("4 - Usun kurs");
+                Console.WriteLine("5 - Exit");
 
                 int type = int.Parse(Console.ReadLine());
 
@@ -61,7 +70,7 @@
 
                         var courseName = Console.ReadLine();
 
-                        Console.WriteLine("Wprowadz twórce:");
+                        Console.WriteLine("Wprowadz dane twórcy:");
 
                         Console.WriteLine("Imie: ");
                         var creatorName = Console.ReadLine();  
@@ -88,11 +97,11 @@
                         Course course1 = new Course(courseName, newCreator, newCourseDescription, courseRatesList);
                         CourseExtend.AddCourse(course1);
 
+                        
 
-                        var serializedObject = CourseExtend.SerializeVideoCourses(course1);
+                        var serializedObject = CourseExtend.SerializeVideoCourses(CourseExtend.VideoCourses);
 
-                        File.WriteAllText("./courseList.txt", serializedObject);
-
+                        File.WriteAllText(@".\courseList.txt", serializedObject);
                         break;
 
                     case 3:
@@ -108,29 +117,9 @@
 
                         CourseExtend.RemoveCourse(name);
                         break;
-                }
-            }
-
-
-
-
-
-
-
-           var abc =  CourseExtend.SerializeVideoCourses(CourseExtend.VideoCourses);
-
-            Console.WriteLine("@@@@"+abc);
-
-            var hhh =  CourseExtend.DeserializeVideoCourses(abc);
-
-            foreach( var h in hhh )
-            {
-                Console.WriteLine("Name: " + h.Name);
-               // Console.WriteLine("Subtitles: " + h.Subtitles);
-                //Console.WriteLine("AvgCourseRate: " + h.AvgCourseRate);
-                foreach ( var rate in h.CourseRateList)
-                {
-                    Console.WriteLine("rate: " + rate);
+                    case 5:
+                        Environment.Exit(0);
+                        break;
                 }
             }
         }

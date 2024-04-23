@@ -12,6 +12,15 @@ namespace MASProjekt
             VideoCourses.Add(course);
         }
 
+        public static void AddCourse(List<Course> courses)
+        {
+            foreach(Course course in courses)
+            {
+                VideoCourses.Add(course);
+
+            }
+        }
+
         public static void RemoveCourse(string name)
         {
             VideoCourses.RemoveAll(course => course.Name == name);
@@ -39,7 +48,7 @@ namespace MASProjekt
         }
 
         public static void FindHighestRatedCourse()  // Metoda klasowa
-        {
+        {//VideoCourses.OrderByDescending(course => course.AvgCourseRate).FirstOrDefault();
             VideoCourses.Max(course => course.AvgCourseRate);
         }
 
