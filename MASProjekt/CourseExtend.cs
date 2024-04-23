@@ -12,14 +12,10 @@ namespace MASProjekt
             VideoCourses.Add(course);
         }
 
-        public static void AddCourse(List<Course> courses)
+        public static void AddCourses(List<Course> courses)
         {
-            foreach(Course course in courses)
-            {
-                VideoCourses.Add(course);
-
-            }
-        }
+            VideoCourses.AddRange(courses);
+        }   
 
         public static void RemoveCourse(string name)
         {
@@ -39,29 +35,24 @@ namespace MASProjekt
 
         public static void SearchCourse(string courseName) // Metoda klasowa przeciążenie
         {
-             VideoCourses.Find(c => c.Name == courseName);
+             VideoCourses.Find(course => course.Name == courseName);
         }
 
         public static void SearchCourse(int courseLenght) // Metoda klasowa przeciążenie
         {
-            VideoCourses.Find(c => c.CourseLenght == courseLenght);
+            VideoCourses.Find(course => course.CourseLenght == courseLenght);
         }
 
-        public static void FindHighestRatedCourse()  // Metoda klasowa
-        {//VideoCourses.OrderByDescending(course => course.AvgCourseRate).FirstOrDefault();
-            VideoCourses.Max(course => course.AvgCourseRate);
+        public static Course FindHighestRatedCourse()  // Metoda klasowa
+        {
+            var highestRatedCourse = VideoCourses.OrderByDescending(course => course.AvgCourseRate).FirstOrDefault();
+
+            return highestRatedCourse;
         }
 
-        public static string SerializeVideoCourses(List<Course> courses)      //przeciążenie 
+        public static string SerializeVideoCourses(List<Course> courses) 
         {
             string jsonString = JsonSerializer.Serialize(courses);
-
-            return jsonString;
-        }
-
-        public static string SerializeVideoCourses(Course course) //przeciążenie
-        {
-            string jsonString = JsonSerializer.Serialize(course);
 
             return jsonString;
         }

@@ -1,52 +1,22 @@
 ﻿
 namespace MASProjekt
-{
+{       //Platforma z kursami wideo
     public class Program
     {
         static void Main(string[] args)
         {
 
-            //Platforma z kursami wideo
-
-            //W przypadku istniejącego juz jsona
 
             string contents = File.ReadAllText(@".\courseList.txt");
 
-            CourseExtend.AddCourse(CourseExtend.DeserializeVideoCourses(contents));
-
-
-            //Na potrzeby ręcznego dodania obiektów 
-
-            //Creator creator1 = new Creator("Jan", "Nowak", "Fajny twórca");
-            //Creator creator2 = new Creator("Jan", "Nowak", "twórca");
-            //Creator creator3 = new Creator("Jan", "Nowak", "Fajny twórca");
-            //Creator creator4 = new Creator("Jan", "Nowak", "Fajny twórca");
-
-            //List<int> rateList1 = new List<int> { 1, 2, 3, 4 };
-            //List<int> rateList2 = new List<int> { 2, 5, 3, 1 };
-            //List<int> rateList3 = new List<int> { 1, 2, 5, 4 };
-            //List<int> rateList4 = new List<int> { 1, 7, 3, 1 };
-
-            //Course ExampleCourse1 = new Course("course1", creator1, "true", rateList1);
-            //Course ExampleCourse2 = new Course("course2", creator2, "true", rateList2);
-            //Course ExampleCourse3 = new Course("course3", creator3, "true", rateList3);
-            //Course ExampleCourse4 = new Course("course4", creator4, "true", rateList4);
-
-            //CourseExtend.AddCourse(ExampleCourse1);
-            //CourseExtend.AddCourse(ExampleCourse2);
-            //CourseExtend.AddCourse(ExampleCourse3);
-            //CourseExtend.AddCourse(ExampleCourse4);
-
-            //List<Course> courseList = new List<Course>
-            //{
-            //    ExampleCourse1,
-            //    ExampleCourse2,
-            //    ExampleCourse3,
-            //    ExampleCourse4
-            //};
-
-            //File.WriteAllText(@".\courseList.txt", CourseExtend.SerializeVideoCourses(courseList));
-
+            if(contents == null || contents.Length == 0)
+            {   //Na potrzeby ręcznego dodania obiektów
+                addTestCourses();
+            }
+            else
+            {   //W przypadku istniejącego juz jsona
+                CourseExtend.AddCourses(CourseExtend.DeserializeVideoCourses(contents));
+            }
 
 
             while (true)
@@ -106,7 +76,9 @@ namespace MASProjekt
 
                     case 3:
 
-                        CourseExtend.FindHighestRatedCourse();
+                        var highestScore = CourseExtend.FindHighestRatedCourse();
+
+                        Console.WriteLine(highestScore.ToString());
 
                         break;
 
@@ -123,5 +95,40 @@ namespace MASProjekt
                 }
             }
         }
+
+        public static void addTestCourses()
+        {
+            Creator creator1 = new Creator("Jan", "Nowak", "Fajny twórca");
+            Creator creator2 = new Creator("Jan", "Nowak", "twórca");
+            Creator creator3 = new Creator("Jan", "Nowak", "Fajny twórca");
+            Creator creator4 = new Creator("Jan", "Nowak", "Fajny twórca");
+
+            List<int> rateList1 = new List<int> { 1, 2, 3, 4 };
+            List<int> rateList2 = new List<int> { 2, 5, 3, 1 };
+            List<int> rateList3 = new List<int> { 1, 2, 5, 4 };
+            List<int> rateList4 = new List<int> { 1, 7, 3, 1 };
+
+            Course ExampleCourse1 = new Course("course1", creator1, "true", rateList1);
+            Course ExampleCourse2 = new Course("course2", creator2, "true", rateList2);
+            Course ExampleCourse3 = new Course("course3", creator3, "true", rateList3);
+            Course ExampleCourse4 = new Course("course4", creator4, "true", rateList4);
+
+            CourseExtend.AddCourse(ExampleCourse1);
+            CourseExtend.AddCourse(ExampleCourse2);
+            CourseExtend.AddCourse(ExampleCourse3);
+            CourseExtend.AddCourse(ExampleCourse4);
+
+            List<Course> courseList = new List<Course>
+            {
+                ExampleCourse1,
+                ExampleCourse2,
+                ExampleCourse3,
+                ExampleCourse4
+            };
+
+            File.WriteAllText(@".\courseList.txt", CourseExtend.SerializeVideoCourses(courseList));
+        }
+
+
     }
 }
